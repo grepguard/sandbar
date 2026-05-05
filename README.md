@@ -1,2 +1,3 @@
 # sandbar
-Local-first security sandbox for AI agents.
+
+Local-first sandboxing for controlled and traceable AI agent execution. 
