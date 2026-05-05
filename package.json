@@ -1,0 +1,20 @@
+{
+  "name": "sandbar",
+  "version": "1.0.0",
+  "description": "Local-first sandboxing for controlled and traceable AI agent execution.",
+  "homepage": "https://github.com/grepguard/sandbar#readme",
+  "bugs": {
+    "url": "https://github.com/grepguard/sandbar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grepguard/sandbar.git"
+  },
+  "license": "MIT",
+  "author": "bereilhp",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
