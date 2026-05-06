@@ -1,7 +1,7 @@
 {
   "name": "sandbar",
   "version": "1.0.0",
-  "description": "Local-first sandboxing for controlled and traceable AI agent execution.",
+  "description": "Local-first sandbox for isolated, observable and traceable execution of AI agents.",
   "homepage": "https://github.com/grepguard/sandbar#readme",
   "bugs": {
     "url": "https://github.com/grepguard/sandbar/issues"

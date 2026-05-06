@@ -1,6 +1,6 @@
 # sandbar
 
-Local-first sandboxing for controlled and traceable AI agent execution.
+Local-first sandbox for isolated, observable and traceable execution of AI agents.
 
 ## Usage
 
