@@ -1,4 +1,4 @@
-# sandbar
+# 🏖️ sandbar
 
 Local-first sandbox for isolated, observable and traceable execution of AI agents.
 
