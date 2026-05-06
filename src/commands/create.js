@@ -54,7 +54,7 @@ async function readConfig(cwd) {
   try {
     await access(configPath);
   } catch {
-    return {};
+    throw new Error(`Missing required config: ${CONFIG_PATH}`);
   }
 
   try {

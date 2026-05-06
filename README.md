@@ -10,10 +10,9 @@ Create a sandbox from the current project:
 sandbar create
 ```
 
-By default, Sandbar starts an `ubuntu:24.04` Docker container and mounts the
-current directory at `/workspace`.
+Sandbar starts a Docker container based on `.sandbar/config.json`.
 
-Optional config:
+Required config:
 
 ```json
 {
