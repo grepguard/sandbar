@@ -1,0 +1,7 @@
+{
+  "image": "ubuntu:24.04",
+  "name": "my-sandbar",
+  "workspace": ".",
+  "mountTarget": "/workspace",
+  "command": ["sleep", "infinity"]
+}
