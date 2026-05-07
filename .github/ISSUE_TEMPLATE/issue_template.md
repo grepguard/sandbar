@@ -1,3 +1,11 @@
+---
+name: Bug report
+about: Report a reproducible problem with sandbar
+title: "[Bug]: "
+labels: bug
+assignees: ""
+---
+
 ## Description
 
 <!-- What is the issue? -->
