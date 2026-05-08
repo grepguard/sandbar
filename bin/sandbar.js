@@ -3,6 +3,7 @@
 import { Command } from "commander";
 import packageJson from "../package.json" with { type: "json" };
 import { create } from "../src/commands/create.js";
+import { list } from "../src/commands/list.js";
 
 const program = new Command();
 
@@ -13,8 +14,14 @@ program
 
 program
   .command("create")
+  .argument("[name]", "Name for the Docker container")
   .description("Create a local Docker sandbox from .sandbar/config.json")
-  .action(create);
+  .action((name) => create({ name }));
+
+program
+  .command("list")
+  .description("List running sandbar containers")
+  .action(list);
 
 try {
   await program.parseAsync(process.argv);

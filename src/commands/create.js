@@ -6,11 +6,11 @@ const CONFIG_PATH = ".sandbar/config.json";
 const DEFAULT_IMAGE = "ubuntu:24.04";
 const DEFAULT_COMMAND = ["sleep", "infinity"];
 
-export async function create() {
+export async function create(options = {}) {
   const cwd = process.cwd();
   const config = await readConfig(cwd);
   const image = config.image ?? DEFAULT_IMAGE;
-  const containerName = config.name ?? createContainerName(path.basename(cwd));
+  const containerName = options.name ?? createContainerName(path.basename(cwd));
   const workspacePath = path.resolve(cwd, config.workspace ?? ".");
   const mountTarget = config.mountTarget ?? "/workspace";
   const command = config.command ?? DEFAULT_COMMAND;

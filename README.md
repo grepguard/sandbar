@@ -4,24 +4,33 @@ Local-first sandbox for isolated, observable and traceable execution of AI agent
 
 ## Usage
 
-Create a sandbox from the current project:
-
-```sh
-sandbar create
-```
-
-Sandbar starts a Docker container based on `.sandbar/config.json`.
-
-Required config:
+Sandbar starts Docker containers from `.sandbar/config.json`:
 
 ```json
 {
   "image": "ubuntu:24.04",
-  "name": "my-sandbar",
   "workspace": ".",
   "mountTarget": "/workspace",
   "command": ["sleep", "infinity"]
 }
 ```
 
-Save it at `.sandbar/config.json`.
+Create a sandbox from the current project with a generated name:
+
+```sh
+sandbar create
+```
+
+Or pass a name:
+
+```sh
+sandbar create test
+```
+
+Generated names are unique, so you can create multiple sandboxes from the same workspace.
+
+List running Sandbar containers:
+
+```sh
+sandbar list
+```
