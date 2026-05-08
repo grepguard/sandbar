@@ -3,6 +3,7 @@
 import { Command } from "commander";
 import packageJson from "../package.json" with { type: "json" };
 import { create } from "../src/commands/create.js";
+import { kill } from "../src/commands/kill.js";
 import { list } from "../src/commands/list.js";
 
 const program = new Command();
@@ -22,6 +23,12 @@ program
   .command("list")
   .description("List running sandbar containers")
   .action(list);
+
+program
+  .command("kill")
+  .argument("<name>", "Name of the sandbar container to stop and remove")
+  .description("Stop and remove a sandbar container")
+  .action(kill);
 
 try {
   await program.parseAsync(process.argv);

@@ -17,16 +17,18 @@ export async function list() {
     return;
   }
 
-  console.log(`${"NAME".padEnd(32)}  PROJECT`);
+  const names = containers.map((container) => container.Names[0].slice(1));
+  const nameWidth = Math.max(
+    "NAME".length,
+    ...names.map((name) => name.length),
+  );
 
-  for (const container of containers) {
-    const name = truncate(container.Names[0].slice(1), 32).padEnd(32);
+  console.log(`${"NAME".padEnd(nameWidth)}  PROJECT`);
+
+  for (const [index, container] of containers.entries()) {
+    const name = names[index].padEnd(nameWidth);
     const project = container.Labels?.[PROJECT_LABEL] ?? "-";
 
     console.log(`${name}  ${project}`);
   }
-}
-
-function truncate(value, length) {
-  return value.length > length ? `${value.slice(0, length - 3)}...` : value;
 }

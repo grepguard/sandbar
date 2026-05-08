@@ -34,3 +34,9 @@ List running Sandbar containers:
 ```sh
 sandbar list
 ```
+
+Stop and remove a Sandbar container:
+
+```sh
+sandbar kill test
+```
