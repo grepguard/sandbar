@@ -28,9 +28,9 @@ npm unlink -g sandbar
 
 - `npm run check` — lint, format and organize imports (writes changes)
 
-## Release
+## Releasing (Maintainers Only)
 
-> **Note:** Publishing is done manually.
+> **Note:** Publishing is done manually by maintainers.
 
 1. Update the version in `package.json`.
 2. Commit and push the change:
@@ -44,7 +44,11 @@ npm unlink -g sandbar
    git tag v1.0.0
    git push origin v1.0.0
    ```
-4. Publish to npm:
+4. Log in to npm (if not already):
+   ```sh
+   npm login
+   ```
+5. Publish to npm:
    ```sh
    npm publish
    ```
