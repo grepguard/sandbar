@@ -1,8 +1,7 @@
-import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import Docker from "dockerode";
+import { readConfig } from "../lib/config.js";
 
-const CONFIG_PATH = ".sandbar/config.json";
 const DEFAULT_IMAGE = "ubuntu:24.04";
 const DEFAULT_COMMAND = ["sleep", "infinity"];
 
@@ -46,22 +45,6 @@ export async function create(options = {}) {
 
   console.log(`Created: ${container.id}`);
   console.log(`Open a shell: docker exec -it ${containerName} bash`);
-}
-
-async function readConfig(cwd) {
-  const configPath = path.join(cwd, CONFIG_PATH);
-
-  try {
-    await access(configPath);
-  } catch {
-    throw new Error(`Missing required config: ${CONFIG_PATH}`);
-  }
-
-  try {
-    return JSON.parse(await readFile(configPath, "utf8"));
-  } catch (error) {
-    throw new Error(`Could not read ${CONFIG_PATH}: ${error.message}`);
-  }
 }
 
 async function assertDockerIsAvailable(docker) {

@@ -2,7 +2,9 @@
 
 import { Command } from "commander";
 import packageJson from "../package.json" with { type: "json" };
+import { connect } from "../src/commands/connect.js";
 import { create } from "../src/commands/create.js";
+import { install } from "../src/commands/install.js";
 import { kill } from "../src/commands/kill.js";
 import { list } from "../src/commands/list.js";
 
@@ -18,6 +20,21 @@ program
   .argument("[name]", "Name for the Docker container")
   .description("Create a local Docker sandbox from .sandbar/config.json")
   .action((name) => create({ name }));
+
+program
+  .command("connect")
+  .argument("<name>", "Name of the sandbar container to connect to")
+  .option("-a, --agent <agent>", "Agent command to run inside the container")
+  .option("-p, --prompt <prompt...>", "Prompt to pass to the agent")
+  .description("Connect to a sandbar container and run an agent task")
+  .action((name, options) => connect(name, options));
+
+program
+  .command("install")
+  .argument("<agent>", "Agent to install in the container")
+  .argument("<name>", "Name of the sandbar container to install into")
+  .description("Install an agent inside a running sandbar container")
+  .action((agent, name) => install(agent, name));
 
 program
   .command("list")
