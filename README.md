@@ -2,6 +2,12 @@
 
 Local-first sandbox for isolated, observable and traceable execution of AI agents.
 
+## Install
+
+```sh
+npm install -g sandbar
+```
+
 ## Config
 
 Sandbar starts Docker containers from `.sandbar/config.json`:
@@ -69,3 +75,22 @@ Stop and remove a Sandbar container:
 ```sh
 sandbar kill test
 ```
+
+## Release
+
+To create a new release:
+
+1. Update the version in `package.json`.
+2. Commit and push the change:
+   ```sh
+   git add package.json
+   git commit -m "Bump version to v1.0.0"
+   git push origin main
+   ```
+3. Create and push a tag:
+   ```sh
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+GitHub Actions will automatically create a release from the tag.
