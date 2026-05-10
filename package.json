@@ -13,6 +13,22 @@
   "license": "MIT",
   "author": "bereilhp",
   "type": "module",
+  "files": [
+    "bin/",
+    "src/"
+  ],
+  "keywords": [
+    "sandbox",
+    "docker",
+    "ai",
+    "agents",
+    "cli",
+    "local-first",
+    "isolation"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "bin": {
     "sandbar": "./bin/sandbar.js"
   },
