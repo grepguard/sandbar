@@ -26,6 +26,7 @@ program
   .argument("<name>", "Name of the sandbar container to connect to")
   .option("-a, --agent <agent>", "Agent command to run inside the container")
   .option("-p, --prompt <prompt...>", "Prompt to pass to the agent")
+  .option("-f, --file <path>", "Path to a file containing the prompt")
   .description("Connect to a sandbar container and run an agent task")
   .action((name, options) => connect(name, options));
 

@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import Docker from "dockerode";
 import { readConfig } from "../lib/config.js";
 
@@ -11,6 +12,12 @@ export async function connect(name, options = {}) {
   const docker = new Docker();
   const config = await readConfig();
   const workingDir = config.mountTarget ?? DEFAULT_WORKING_DIR;
+
+  if (options.file) {
+    const content = await readFile(options.file, "utf-8");
+    options.prompt = [content.trim()];
+  }
+
   const command = resolveCommand(config, options);
   const containerInfo = await findManagedContainer(docker, name);
 
