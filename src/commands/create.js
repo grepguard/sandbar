@@ -16,6 +16,7 @@ export async function create(options = {}) {
   const docker = new Docker();
 
   await assertDockerIsAvailable(docker);
+  await ensureImageExists(docker, image);
 
   console.log(`Creating sandbar sandbox: ${containerName}`);
   console.log(`Image: ${image}`);
@@ -52,6 +53,25 @@ async function assertDockerIsAvailable(docker) {
     await docker.ping();
   } catch (error) {
     throw new Error(`Docker is not available or not running: ${error.message}`);
+  }
+}
+
+async function ensureImageExists(docker, image) {
+  try {
+    const img = docker.getImage(image);
+    await img.inspect();
+  } catch {
+    console.log(`Image ${image} not found locally. Pulling...`);
+    await new Promise((resolve, reject) => {
+      docker.pull(image, (err, stream) => {
+        if (err) return reject(err);
+        docker.modem.followProgress(stream, (err, output) => {
+          if (err) return reject(err);
+          resolve(output);
+        });
+      });
+    });
+    console.log(`Successfully pulled ${image}`);
   }
 }
 
