@@ -24,6 +24,8 @@ Sandbar starts Docker containers from `.sandbar/config.json`:
 }
 ```
 
+>**Note**: The config file must exist in your project and will not be generated automatically.
+
 ## Allowed agents
 
 - `opencode`
@@ -39,6 +41,8 @@ sandbar create
 ```
 
 >**Note**: Generated names are unique, so you can create multiple sandboxes from the same workspace.
+
+>**Note**: If the image is not installed or locally available, sandbar will pull it automatically.
 
 Or pass a specific name:
 
