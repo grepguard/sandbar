@@ -66,10 +66,22 @@ Install an agent inside a running Sandbar container (example: `opencode`):
 sandbar install opencode test
 ```
 
+Connect to a running Sandbar container (opens an interactive shell):
+
+```sh
+sandbar connect test
+```
+
 Run an agent task inside a running Sandbar container:
 
 ```sh
 sandbar connect test --agent opencode --prompt "add a new file called hello.js"
+```
+
+Or pass a file as the prompt:
+
+```sh
+sandbar connect test --agent opencode --file prompt.txt
 ```
 
 ### Kill 

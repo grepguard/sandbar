@@ -45,7 +45,7 @@ export async function create(options = {}) {
   await container.start();
 
   console.log(`Created: ${container.id}`);
-  console.log(`Open a shell: docker exec -it ${containerName} bash`);
+  console.log(`Open a shell: sandbar connect ${containerName}`);
 }
 
 async function assertDockerIsAvailable(docker) {
