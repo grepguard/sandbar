@@ -32,17 +32,13 @@ npm unlink -g sandbar
 
 > **Note:** Publishing is done manually by maintainers.
 
-1. Update the version in `package.json`.
-2. Commit and push the change:
+1. Bump the version (this updates `package.json` and `package-lock.json` together, and creates a commit and tag):
    ```sh
-   git add package.json
-   git commit -m "Bump version to v1.0.0"
-   git push origin main
+   npm version patch   # or minor / major or the specific version
    ```
-3. Create and push a tag:
+2. Push the commit and tag:
    ```sh
-   git tag v1.0.0
-   git push origin v1.0.0
+   git push origin main --follow-tags
    ```
 4. Log in to npm (if not already):
    ```sh
