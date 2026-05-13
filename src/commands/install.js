@@ -17,8 +17,9 @@ const INSTALLERS = {
   },
 };
 
-export async function install(agent, name) {
-  if (!agent) throw new Error("Missing required argument: <agent>");
+export async function install(name, options) {
+  const agent = options?.agent;
+  if (!agent) throw new Error("Missing required option: --agent");
   if (!name) throw new Error("Missing required argument: <name>");
 
   const installer = INSTALLERS[agent];

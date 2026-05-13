@@ -63,7 +63,7 @@ sandbar list
 Install an agent inside a running Sandbar container (example: `opencode`):
 
 ```sh
-sandbar install opencode test
+sandbar install test --agent opencode
 ```
 
 Connect to a running Sandbar container (opens an interactive shell):

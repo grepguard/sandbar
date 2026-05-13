@@ -34,10 +34,10 @@ program
 
 program
   .command("install")
-  .argument("<agent>", "Agent to install in the container")
   .argument("<name>", "Name of the sandbar container to install into")
+  .option("-a, --agent <agent>", "Agent to install in the container")
   .description("Install an agent inside a running sandbar container")
-  .action((agent, name) => install(agent, name));
+  .action((name, options) => install(name, options));
 
 program
   .command("list")
