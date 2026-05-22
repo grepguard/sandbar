@@ -1,7 +1,13 @@
-import { access, readFile } from "node:fs/promises";
+import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export const CONFIG_PATH = ".sandbar/config.json";
+const DEFAULT_CONFIG = {
+  image: "ubuntu:24.04",
+  workspace: ".",
+  mountTarget: "/workspace",
+  agents: ["opencode"],
+};
 
 export async function readConfig(cwd = process.cwd()) {
   const configPath = path.join(cwd, CONFIG_PATH);
@@ -9,7 +15,8 @@ export async function readConfig(cwd = process.cwd()) {
   try {
     await access(configPath);
   } catch {
-    throw new Error(`Missing required config: ${CONFIG_PATH}`);
+    await createDefaultConfig(configPath);
+    console.log(`Created default config: ${CONFIG_PATH}`);
   }
 
   try {
@@ -17,4 +24,9 @@ export async function readConfig(cwd = process.cwd()) {
   } catch (error) {
     throw new Error(`Could not read ${CONFIG_PATH}: ${error.message}`);
   }
+}
+
+async function createDefaultConfig(configPath) {
+  await mkdir(path.dirname(configPath), { recursive: true });
+  await writeFile(configPath, `${JSON.stringify(DEFAULT_CONFIG, null, 2)}\n`);
 }

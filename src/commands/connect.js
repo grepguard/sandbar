@@ -5,7 +5,7 @@ import { readConfig } from "../lib/config.js";
 
 const MANAGED_LABEL = "sandbar.managed";
 const DEFAULT_WORKING_DIR = "/workspace";
-const DEFAULT_AGENTS = {
+const AGENT_COMMANDS = {
   opencode: ["opencode", "run"],
 };
 
@@ -87,18 +87,24 @@ function resolveCommand(config, options) {
     throw new Error("Missing required option: --prompt <prompt>");
   }
 
-  const agents = {
-    ...DEFAULT_AGENTS,
-    ...(config.agents ?? {}),
-  };
-  const agentCommand = agents[options.agent];
+  const enabledAgents = config.agents ?? [];
 
-  if (!agentCommand) {
-    const availableAgents = Object.keys(agents).sort().join(", ");
+  if (!Array.isArray(enabledAgents)) {
+    throw new Error("Invalid config: agents must be an array");
+  }
+
+  if (!enabledAgents.includes(options.agent)) {
+    const availableAgents = enabledAgents.toSorted().join(", ");
 
     throw new Error(
       `Unknown agent: ${options.agent}. Available agents: ${availableAgents}`,
     );
+  }
+
+  const agentCommand = AGENT_COMMANDS[options.agent];
+
+  if (!agentCommand) {
+    throw new Error(`Unsupported agent: ${options.agent}`);
   }
 
   if (!Array.isArray(agentCommand) || agentCommand.length === 0) {

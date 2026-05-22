@@ -12,7 +12,6 @@ export async function create(options = {}) {
   const containerName = options.name ?? createContainerName(path.basename(cwd));
   const workspacePath = path.resolve(cwd, config.workspace ?? ".");
   const mountTarget = config.mountTarget ?? "/workspace";
-  const command = config.command ?? DEFAULT_COMMAND;
   const docker = new Docker();
 
   await assertDockerIsAvailable(docker);
@@ -24,7 +23,7 @@ export async function create(options = {}) {
 
   const container = await docker.createContainer({
     Image: image,
-    Cmd: command,
+    Cmd: DEFAULT_COMMAND,
     name: containerName,
     WorkingDir: mountTarget,
     Labels: {

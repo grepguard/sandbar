@@ -17,14 +17,13 @@ Sandbar starts Docker containers from `.sandbar/config.json`:
   "image": "ubuntu:24.04",
   "workspace": ".",
   "mountTarget": "/workspace",
-  "command": ["sleep", "infinity"],
-  "agents": {
-    "opencode": ["opencode", "run"]
-  }
+  "agents": [
+    "opencode"
+  ]
 }
 ```
 
->**Note**: The config file must exist in your project and will not be generated automatically.
+>**Note**: If the config file does not exist, Sandbar creates this default config automatically.
 
 ## Allowed agents
 

@@ -23,12 +23,12 @@ export async function list() {
     ...names.map((name) => name.length),
   );
 
-  console.log(`${"NAME".padEnd(nameWidth)}  PROJECT`);
+  console.log(`NUMBER  ${"NAME".padEnd(nameWidth)}  PROJECT`);
 
   for (const [index, container] of containers.entries()) {
     const name = names[index].padEnd(nameWidth);
     const project = container.Labels?.[PROJECT_LABEL] ?? "-";
 
-    console.log(`${name}  ${project}`);
+    console.log(`${index}       ${name}  ${project}`);
   }
 }

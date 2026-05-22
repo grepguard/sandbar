@@ -2,8 +2,7 @@
   "image": "ubuntu:24.04",
   "workspace": ".",
   "mountTarget": "/workspace",
-  "command": ["sleep", "infinity"],
-  "agents": {
-    "opencode": ["opencode", "run"]
-  }
+  "agents": [
+    "opencode"
+  ]
 }
