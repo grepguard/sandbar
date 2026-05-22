@@ -1,6 +1,6 @@
 {
   "name": "sandbar",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Local-first sandbox for isolated, observable and traceable execution of AI agents.",
   "homepage": "https://github.com/grepguard/sandbar#readme",
   "bugs": {
