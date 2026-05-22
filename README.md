@@ -17,9 +17,7 @@ Sandbar starts Docker containers from `.sandbar/config.json`:
   "image": "ubuntu:24.04",
   "workspace": ".",
   "mountTarget": "/workspace",
-  "agents": [
-    "opencode"
-  ]
+  "agents": ["opencode"]
 }
 ```
 
