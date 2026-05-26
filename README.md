@@ -10,7 +10,7 @@ npm install -g sandbar
 
 ## Allowed agents
 
-- `opencode`
+- opencode
 
 ## Commands
 
