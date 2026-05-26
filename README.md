@@ -8,11 +8,6 @@ Local-first sandbox for isolated, observable and traceable execution of AI agent
 npm install -g sandbar
 ```
 
-## Defaults
-
-Sandbar mounts the current directory into `/workspace` by default.
-Containers use `ubuntu:26.04`, the image is managed by Sandbar and does not need to be configured.
-
 ## Allowed agents
 
 - `opencode`
@@ -21,14 +16,15 @@ Containers use `ubuntu:26.04`, the image is managed by Sandbar and does not need
 
 ### Create
 
-Create a sandbox from the current directory with a generated name:
+Create an `ubuntu:26.04` Docker sandbox from the current directory with a
+generated name:
 
 ```sh
 sandbar create
 ```
 
-Generated names are unique, so you can create multiple sandboxes from the same workspace.
-If `ubuntu:26.04` is not available locally, Sandbar pulls it automatically.
+> Note: Generated names are unique, so you can create multiple sandboxes from the same
+workspace.
 
 Or pass a specific name:
 
