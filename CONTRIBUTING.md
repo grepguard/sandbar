@@ -32,9 +32,9 @@ npm unlink -g sandbar
 
 > **Note:** Publishing is done manually by maintainers.
 
-1. Bump the version (this updates `package.json` and `package-lock.json` together, and creates a commit and tag):
+1. Bump the version either patch, minor, or major (this updates `package.json` and `package-lock.json` together, and creates a commit and tag):
    ```sh
-   npm version patch   # or minor / major or the specific version
+   npm version patch
    ```
 2. Push the commit and tag:
    ```sh
