@@ -27,7 +27,6 @@ export async function create(options = {}) {
     WorkingDir: mountTarget,
     Labels: {
       "sandbar.managed": "true",
-      "sandbar.project": path.basename(cwd),
     },
     HostConfig: {
       Mounts: [

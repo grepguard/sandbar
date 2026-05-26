@@ -1,7 +1,5 @@
 import Docker from "dockerode";
 
-const PROJECT_LABEL = "sandbar.project";
-
 export async function list() {
   const docker = new Docker();
 
@@ -23,12 +21,11 @@ export async function list() {
     ...names.map((name) => name.length),
   );
 
-  console.log(`NUMBER  ${"NAME".padEnd(nameWidth)}  PROJECT`);
+  console.log(`NUMBER  ${"NAME".padEnd(nameWidth)}`);
 
-  for (const [index, container] of containers.entries()) {
+  for (const index of containers.keys()) {
     const name = names[index].padEnd(nameWidth);
-    const project = container.Labels?.[PROJECT_LABEL] ?? "-";
 
-    console.log(`${index}       ${name}  ${project}`);
+    console.log(`${index}       ${name}`);
   }
 }
