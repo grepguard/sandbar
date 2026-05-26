@@ -14,14 +14,14 @@ Sandbar starts Docker containers from `.sandbar/config.json`:
 
 ```json
 {
-  "image": "ubuntu:24.04",
   "workspace": ".",
   "mountTarget": "/workspace",
   "agents": ["opencode"]
 }
 ```
 
->**Note**: If the config file does not exist, Sandbar creates this default config automatically.
+If the config file does not exist, Sandbar creates this default config automatically.
+Containers use `ubuntu:26.04` by default, the image is managed by Sandbar and does not need to be configured.
 
 ## Allowed agents
 
@@ -37,9 +37,8 @@ Create a sandbox from the current project config with a generated name:
 sandbar create
 ```
 
->**Note**: Generated names are unique, so you can create multiple sandboxes from the same workspace.
-
->**Note**: If the image is not installed or locally available, sandbar will pull it automatically.
+Generated names are unique, so you can create multiple sandboxes from the same workspace.
+If `ubuntu:26.04` is not available locally, Sandbar pulls it automatically.
 
 Or pass a specific name:
 

@@ -2,13 +2,13 @@ import path from "node:path";
 import Docker from "dockerode";
 import { readConfig } from "../lib/config.js";
 
-const DEFAULT_IMAGE = "ubuntu:24.04";
+const DEFAULT_IMAGE = "ubuntu:26.04";
 const DEFAULT_COMMAND = ["sleep", "infinity"];
 
 export async function create(options = {}) {
   const cwd = process.cwd();
   const config = await readConfig(cwd);
-  const image = config.image ?? DEFAULT_IMAGE;
+  const image = DEFAULT_IMAGE;
   const containerName = options.name ?? createContainerName(path.basename(cwd));
   const workspacePath = path.resolve(cwd, config.workspace ?? ".");
   const mountTarget = config.mountTarget ?? "/workspace";
@@ -18,7 +18,6 @@ export async function create(options = {}) {
   await ensureImageExists(docker, image);
 
   console.log(`Creating sandbar sandbox: ${containerName}`);
-  console.log(`Image: ${image}`);
   console.log(`Mount: ${workspacePath} -> ${mountTarget}`);
 
   const container = await docker.createContainer({

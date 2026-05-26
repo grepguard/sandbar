@@ -2,12 +2,12 @@ import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export const CONFIG_PATH = ".sandbar/config.json";
-const DEFAULT_CONFIG = {
-  image: "ubuntu:24.04",
-  workspace: ".",
-  mountTarget: "/workspace",
-  agents: ["opencode"],
-};
+const DEFAULT_CONFIG_JSON = `{
+  "workspace": ".",
+  "mountTarget": "/workspace",
+  "agents": ["opencode"]
+}
+`;
 
 export async function readConfig(cwd = process.cwd()) {
   const configPath = path.join(cwd, CONFIG_PATH);
@@ -28,5 +28,5 @@ export async function readConfig(cwd = process.cwd()) {
 
 async function createDefaultConfig(configPath) {
   await mkdir(path.dirname(configPath), { recursive: true });
-  await writeFile(configPath, `${JSON.stringify(DEFAULT_CONFIG, null, 2)}\n`);
+  await writeFile(configPath, DEFAULT_CONFIG_JSON);
 }
