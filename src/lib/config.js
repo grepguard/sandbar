@@ -4,8 +4,7 @@ import path from "node:path";
 export const CONFIG_PATH = ".sandbar/config.json";
 const DEFAULT_CONFIG_JSON = `{
   "workspace": ".",
-  "mountTarget": "/workspace",
-  "agents": ["opencode"]
+  "mountTarget": "/workspace"
 }
 `;
 

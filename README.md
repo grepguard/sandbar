@@ -15,13 +15,12 @@ Sandbar starts Docker containers from `.sandbar/config.json`:
 ```json
 {
   "workspace": ".",
-  "mountTarget": "/workspace",
-  "agents": ["opencode"]
+  "mountTarget": "/workspace"
 }
 ```
 
 If the config file does not exist, Sandbar creates this default config automatically.
-Containers use `ubuntu:26.04` by default, the image is managed by Sandbar and does not need to be configured.
+Containers use `ubuntu:26.04`, the image is managed by Sandbar and does not need to be configured.
 
 ## Allowed agents
 

@@ -29,7 +29,7 @@ export async function connect(name, options = {}) {
     options.prompt = [content.trim()];
   }
 
-  const command = resolveCommand(config, options);
+  const command = resolveCommand(options);
 
   console.log(`Connecting to sandbar container: ${name}`);
   console.log(`Working directory: ${workingDir}`);
@@ -76,7 +76,7 @@ async function findManagedContainer(docker, name) {
   return containerInfo;
 }
 
-function resolveCommand(config, options) {
+function resolveCommand(options) {
   if (!options.agent) {
     throw new Error("Missing required option: --agent <agent>");
   }
@@ -87,24 +87,14 @@ function resolveCommand(config, options) {
     throw new Error("Missing required option: --prompt <prompt>");
   }
 
-  const enabledAgents = config.agents ?? [];
+  const agentCommand = AGENT_COMMANDS[options.agent];
 
-  if (!Array.isArray(enabledAgents)) {
-    throw new Error("Invalid config: agents must be an array");
-  }
-
-  if (!enabledAgents.includes(options.agent)) {
-    const availableAgents = enabledAgents.toSorted().join(", ");
+  if (!agentCommand) {
+    const availableAgents = Object.keys(AGENT_COMMANDS).sort().join(", ");
 
     throw new Error(
       `Unknown agent: ${options.agent}. Available agents: ${availableAgents}`,
     );
-  }
-
-  const agentCommand = AGENT_COMMANDS[options.agent];
-
-  if (!agentCommand) {
-    throw new Error(`Unsupported agent: ${options.agent}`);
   }
 
   if (!Array.isArray(agentCommand) || agentCommand.length === 0) {
