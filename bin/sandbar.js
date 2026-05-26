@@ -18,8 +18,14 @@ program
 program
   .command("create")
   .argument("[name]", "Name for the Docker container")
-  .description("Create a local Docker sandbox from .sandbar/config.json")
-  .action((name) => create({ name }));
+  .option("-w, --workspace <path>", "Host workspace path to mount", ".")
+  .option(
+    "-m, --mount-target <path>",
+    "Container path for the mounted workspace",
+    "/workspace",
+  )
+  .description("Create a local Docker sandbox")
+  .action((name, options) => create({ name, ...options }));
 
 program
   .command("connect")

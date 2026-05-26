@@ -1,7 +1,6 @@
 import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import Docker from "dockerode";
-import { readConfig } from "../lib/config.js";
 
 const MANAGED_LABEL = "sandbar.managed";
 const DEFAULT_WORKING_DIR = "/workspace";
@@ -11,18 +10,17 @@ const AGENT_COMMANDS = {
 
 export async function connect(name, options = {}) {
   const docker = new Docker();
-  const config = await readConfig();
   const containerInfo = await findManagedContainer(docker, name);
 
   if (containerInfo.State !== "running") {
     throw new Error(`Sandbar container is not running: ${name}`);
   }
 
-  if (!options.agent) {
-    return openShell(name);
-  }
+  const workingDir = await findContainerWorkingDir(docker, containerInfo.Id);
 
-  const workingDir = config.mountTarget ?? DEFAULT_WORKING_DIR;
+  if (!options.agent) {
+    return openShell(name, workingDir);
+  }
 
   if (options.file) {
     const content = await readFile(options.file, "utf-8");
@@ -45,11 +43,15 @@ export async function connect(name, options = {}) {
   }
 }
 
-function openShell(containerName) {
+function openShell(containerName, workingDir) {
   return new Promise((resolve, reject) => {
-    const proc = spawn("docker", ["exec", "-it", containerName, "bash"], {
-      stdio: "inherit",
-    });
+    const proc = spawn(
+      "docker",
+      ["exec", "-it", "-w", workingDir, containerName, "bash"],
+      {
+        stdio: "inherit",
+      },
+    );
     proc.on("exit", (code) => {
       if (code === 0) resolve();
       else reject(new Error(`Shell exited with code ${code}`));
@@ -74,6 +76,13 @@ async function findManagedContainer(docker, name) {
   }
 
   return containerInfo;
+}
+
+async function findContainerWorkingDir(docker, containerId) {
+  const container = docker.getContainer(containerId);
+  const details = await container.inspect();
+
+  return details.Config?.WorkingDir || DEFAULT_WORKING_DIR;
 }
 
 function resolveCommand(options) {

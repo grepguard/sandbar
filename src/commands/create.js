@@ -1,17 +1,20 @@
 import path from "node:path";
 import Docker from "dockerode";
-import { readConfig } from "../lib/config.js";
 
 const DEFAULT_IMAGE = "ubuntu:26.04";
 const DEFAULT_COMMAND = ["sleep", "infinity"];
+const DEFAULT_WORKSPACE = ".";
+const DEFAULT_MOUNT_TARGET = "/workspace";
 
 export async function create(options = {}) {
   const cwd = process.cwd();
-  const config = await readConfig(cwd);
   const image = DEFAULT_IMAGE;
   const containerName = options.name ?? createContainerName(path.basename(cwd));
-  const workspacePath = path.resolve(cwd, config.workspace ?? ".");
-  const mountTarget = config.mountTarget ?? "/workspace";
+  const workspacePath = path.resolve(
+    cwd,
+    options.workspace ?? DEFAULT_WORKSPACE,
+  );
+  const mountTarget = options.mountTarget ?? DEFAULT_MOUNT_TARGET;
   const docker = new Docker();
 
   await assertDockerIsAvailable(docker);

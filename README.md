@@ -8,18 +8,9 @@ Local-first sandbox for isolated, observable and traceable execution of AI agent
 npm install -g sandbar
 ```
 
-## Config
+## Defaults
 
-Sandbar starts Docker containers from `.sandbar/config.json`:
-
-```json
-{
-  "workspace": ".",
-  "mountTarget": "/workspace"
-}
-```
-
-If the config file does not exist, Sandbar creates this default config automatically.
+Sandbar mounts the current directory into `/workspace` by default.
 Containers use `ubuntu:26.04`, the image is managed by Sandbar and does not need to be configured.
 
 ## Allowed agents
@@ -30,7 +21,7 @@ Containers use `ubuntu:26.04`, the image is managed by Sandbar and does not need
 
 ### Create
 
-Create a sandbox from the current project config with a generated name:
+Create a sandbox from the current directory with a generated name:
 
 ```sh
 sandbar create
@@ -43,6 +34,15 @@ Or pass a specific name:
 
 ```sh
 sandbar create test
+```
+
+> Note: If no paths are provided, Sandbar mounts the current directory (`.`) to
+> `/workspace` inside Docker.
+
+Mount a different host path or container target:
+
+```sh
+sandbar create test --workspace . --mount-target /workspace
 ```
 
 ### List
