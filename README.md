@@ -49,6 +49,20 @@ List running Sandbar containers:
 sandbar list
 ```
 
+### Start and stop
+
+Start a stopped Sandbar container:
+
+```sh
+sandbar start test
+```
+
+Stop a Sandbar container without removing it:
+
+```sh
+sandbar stop test
+```
+
 ### Install and connect AI agents
 
 Install an agent inside a running Sandbar container (example: `opencode`):

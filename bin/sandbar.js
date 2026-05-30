@@ -7,6 +7,8 @@ import { create } from "../src/commands/create.js";
 import { install } from "../src/commands/install.js";
 import { kill } from "../src/commands/kill.js";
 import { list } from "../src/commands/list.js";
+import { start } from "../src/commands/start.js";
+import { stop } from "../src/commands/stop.js";
 
 const program = new Command();
 
@@ -49,6 +51,18 @@ program
   .command("list")
   .description("List running sandbar containers")
   .action(list);
+
+program
+  .command("start")
+  .argument("<name>", "Name of the sandbar container to start")
+  .description("Start a stopped sandbar container")
+  .action(start);
+
+program
+  .command("stop")
+  .argument("<name>", "Name of the sandbar container to stop")
+  .description("Stop a sandbar container")
+  .action(stop);
 
 program
   .command("kill")
