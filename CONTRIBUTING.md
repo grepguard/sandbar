@@ -40,11 +40,11 @@ npm unlink -g sandbar
    ```sh
    git push origin main --follow-tags
    ```
-4. Log in to npm (if not already):
+3. Log in to npm (if not already):
    ```sh
    npm login
    ```
-5. Publish to npm:
+4. Publish to npm:
    ```sh
    npm publish
    ```

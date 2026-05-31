@@ -1,15 +1,14 @@
-import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
-import Docker from "dockerode";
-
-const MANAGED_LABEL = "sandbar.managed";
-const DEFAULT_WORKING_DIR = "/workspace";
-const AGENT_COMMANDS = {
-  opencode: ["opencode", "run"],
-};
+import { AGENTS, listRunnableAgents } from "../agents/index.js";
+import {
+  findContainerWorkingDir,
+  findManagedContainer,
+} from "../lib/containers.js";
+import { createDockerClient } from "../lib/docker.js";
+import { openShell, runInContainer } from "../lib/exec.js";
 
 export async function connect(name, options = {}) {
-  const docker = new Docker();
+  const docker = await createDockerClient();
   const containerInfo = await findManagedContainer(docker, name);
 
   if (containerInfo.State !== "running") {
@@ -19,7 +18,7 @@ export async function connect(name, options = {}) {
   const workingDir = await findContainerWorkingDir(docker, containerInfo.Id);
 
   if (!options.agent) {
-    return openShell(name, workingDir);
+    return openShell(docker, containerInfo.Id, { workingDir });
   }
 
   if (options.file) {
@@ -43,48 +42,6 @@ export async function connect(name, options = {}) {
   }
 }
 
-function openShell(containerName, workingDir) {
-  return new Promise((resolve, reject) => {
-    const proc = spawn(
-      "docker",
-      ["exec", "-it", "-w", workingDir, containerName, "bash"],
-      {
-        stdio: "inherit",
-      },
-    );
-    proc.on("exit", (code) => {
-      if (code === 0) resolve();
-      else reject(new Error(`Shell exited with code ${code}`));
-    });
-    proc.on("error", reject);
-  });
-}
-
-async function findManagedContainer(docker, name) {
-  const containers = await docker.listContainers({
-    all: true,
-    filters: {
-      label: [`${MANAGED_LABEL}=true`],
-      name: [`^/${name}$`],
-    },
-  });
-
-  const containerInfo = containers[0];
-
-  if (!containerInfo) {
-    throw new Error(`No sandbar container found: ${name}`);
-  }
-
-  return containerInfo;
-}
-
-async function findContainerWorkingDir(docker, containerId) {
-  const container = docker.getContainer(containerId);
-  const details = await container.inspect();
-
-  return details.Config?.WorkingDir || DEFAULT_WORKING_DIR;
-}
-
 function resolveCommand(options) {
   if (!options.agent) {
     throw new Error("Missing required option: --agent <agent>");
@@ -96,10 +53,10 @@ function resolveCommand(options) {
     throw new Error("Missing required option: --prompt <prompt>");
   }
 
-  const agentCommand = AGENT_COMMANDS[options.agent];
+  const agentCommand = AGENTS[options.agent]?.runCommand;
 
   if (!agentCommand) {
-    const availableAgents = Object.keys(AGENT_COMMANDS).sort().join(", ");
+    const availableAgents = listRunnableAgents().join(", ");
 
     throw new Error(
       `Unknown agent: ${options.agent}. Available agents: ${availableAgents}`,
@@ -119,27 +76,4 @@ function normalizePrompt(prompt) {
   }
 
   return (prompt ?? "").trim();
-}
-
-async function runInContainer(docker, containerId, { command, workingDir }) {
-  const container = docker.getContainer(containerId);
-  const exec = await container.exec({
-    Cmd: command,
-    AttachStdout: true,
-    AttachStderr: true,
-    Tty: false,
-    WorkingDir: workingDir,
-  });
-  const stream = await exec.start({});
-
-  docker.modem.demuxStream(stream, process.stdout, process.stderr);
-
-  await new Promise((resolve, reject) => {
-    stream.on("end", resolve);
-    stream.on("error", reject);
-  });
-
-  const result = await exec.inspect();
-
-  return result.ExitCode;
 }

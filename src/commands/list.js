@@ -1,14 +1,9 @@
-import Docker from "dockerode";
+import { listManagedContainers } from "../lib/containers.js";
+import { createDockerClient } from "../lib/docker.js";
 
 export async function list() {
-  const docker = new Docker();
-
-  const containers = await docker.listContainers({
-    filters: {
-      label: ["sandbar.managed=true"],
-      status: ["running"],
-    },
-  });
+  const docker = await createDockerClient();
+  const containers = await listManagedContainers(docker, { status: "running" });
 
   if (containers.length === 0) {
     console.log("No running sandbar containers found.");

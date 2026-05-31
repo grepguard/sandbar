@@ -1,5 +1,5 @@
 import path from "node:path";
-import Docker from "dockerode";
+import { createDockerClient } from "../lib/docker.js";
 
 const DEFAULT_IMAGE = "ubuntu:26.04";
 const DEFAULT_COMMAND = ["sleep", "infinity"];
@@ -15,9 +15,8 @@ export async function create(options = {}) {
     options.workspace ?? DEFAULT_WORKSPACE,
   );
   const mountTarget = options.mountTarget ?? DEFAULT_MOUNT_TARGET;
-  const docker = new Docker();
+  const docker = await createDockerClient();
 
-  await assertDockerIsAvailable(docker);
   await ensureImageExists(docker, image);
 
   console.log(`Creating sandbar sandbox: ${containerName}`);
@@ -46,14 +45,6 @@ export async function create(options = {}) {
 
   console.log(`Created: ${container.id}`);
   console.log(`Open a shell: sandbar connect ${containerName}`);
-}
-
-async function assertDockerIsAvailable(docker) {
-  try {
-    await docker.ping();
-  } catch (error) {
-    throw new Error(`Docker is not available or not running: ${error.message}`);
-  }
 }
 
 async function ensureImageExists(docker, image) {
