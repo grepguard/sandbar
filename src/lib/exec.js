@@ -4,12 +4,12 @@ export async function runInContainer(docker, containerId, options) {
     Cmd: options.command,
     AttachStdout: true,
     AttachStderr: true,
-    Tty: false,
+    Tty: true,
     WorkingDir: options.workingDir,
     User: options.user,
     Env: options.env,
   });
-  const stream = await exec.start({});
+  const stream = await exec.start({ Tty: true });
 
   docker.modem.demuxStream(stream, process.stdout, process.stderr);
   await waitForStream(stream);
@@ -29,6 +29,7 @@ export async function openShell(docker, containerId, { workingDir }) {
     WorkingDir: workingDir,
   });
   const stream = await exec.start({
+    Tty: true,
     hijack: true,
     stdin: true,
   });
