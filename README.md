@@ -110,6 +110,8 @@ sandbar connect test --agent codex --prompt "hello" --key sk-xxx
 
 > ***Note:*** `--key` currently only supports `codex`.
 
+> ***Note:*** Codex's `model_reasoning_effort` is currently hardcoded to `high`.
+
 ### Kill 
 
 Stop and remove a Sandbar container:
