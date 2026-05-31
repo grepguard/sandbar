@@ -40,6 +40,7 @@ program
   .option("-a, --agent <agent>", "Agent command to run inside the container")
   .option("-p, --prompt <prompt...>", "Prompt to pass to the agent")
   .option("-f, --file <path>", "Path to a file containing the prompt")
+  .option("-k, --key <key>", "API key to pass to the agent")
   .description(
     "Connect to a sandbar container manually or run an agent task inside it",
   )

@@ -7,6 +7,7 @@ export async function runInContainer(docker, containerId, options) {
     Tty: false,
     WorkingDir: options.workingDir,
     User: options.user,
+    Env: options.env,
   });
   const stream = await exec.start({});
 
@@ -28,7 +29,6 @@ export async function openShell(docker, containerId, { workingDir }) {
     WorkingDir: workingDir,
   });
   const stream = await exec.start({
-    Tty: true,
     hijack: true,
     stdin: true,
   });

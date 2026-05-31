@@ -32,9 +32,12 @@ export async function connect(name, options = {}) {
   console.log(`Working directory: ${workingDir}`);
   console.log(`Command: ${command.join(" ")}`);
 
+  const env = options.key ? [`CODEX_API_KEY=${options.key}`] : undefined;
+
   const exitCode = await runInContainer(docker, containerInfo.Id, {
     command,
     workingDir,
+    env,
   });
 
   if (exitCode !== 0) {

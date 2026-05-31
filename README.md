@@ -102,6 +102,15 @@ Or pass a file as the prompt:
 sandbar connect test --agent opencode --file prompt.txt
 ```
 
+Pass an API key to an agent:
+
+```sh
+sandbar connect test --agent codex --prompt "hello" --key sk-xxx
+```
+
+> ***Note:*** `--key` currently only supports `codex` and sets the `CODEX_API_KEY`
+> environment variable. Other agents ignore it.
+
 ### Kill 
 
 Stop and remove a Sandbar container:
