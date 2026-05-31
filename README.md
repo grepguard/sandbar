@@ -10,6 +10,7 @@ npm install -g sandbar
 
 ## Allowed agents
 
+- codex
 - opencode
 
 ## Commands
@@ -23,7 +24,7 @@ generated name:
 sandbar create
 ```
 
-> Note: Generated names are unique, so you can create multiple sandboxes from the same
+> ***Note:*** Generated names are unique, so you can create multiple sandboxes from the same
 workspace.
 
 Or pass a specific name:
@@ -32,10 +33,20 @@ Or pass a specific name:
 sandbar create test
 ```
 
-> Note: If no paths are provided, Sandbar mounts the current directory (`.`) to
-> `/workspace` inside Docker.
+> ***Note:*** By default, Sandbar uses isolated mode. It copies the current
+> directory (`.`) to `/workspace` inside Docker once, so changes are not shared
+> between the host and container.
 
-Mount a different host path or container target:
+Choose either isolated or bind mode:
+
+```sh
+sandbar create test --mount-mode isolated
+sandbar create test --mount-mode bind
+```
+
+> ***Note:*** Use bind mode when you want changes shared between the host and container.
+
+Copy or mount a different workspace path or container target:
 
 ```sh
 sandbar create test --workspace . --mount-target /workspace
@@ -82,6 +93,9 @@ Run an agent task inside a running Sandbar container:
 ```sh
 sandbar connect test --agent opencode --prompt "add a new file called hello.js"
 ```
+
+> ***Note:*** The `opencode` agent runs with `--dangerously-skip-permissions`.
+> The `codex` agent runs with `--yolo`.
 
 Or pass a file as the prompt:
 

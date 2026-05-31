@@ -20,10 +20,15 @@ program
 program
   .command("create")
   .argument("[name]", "Name for the Docker container")
-  .option("-w, --workspace <path>", "Host workspace path to mount", ".")
+  .option("-w, --workspace <path>", "Host workspace path to copy or mount", ".")
   .option(
-    "-m, --mount-target <path>",
-    "Container path for the mounted workspace",
+    "-m, --mount-mode <mode>",
+    "Workspace mode: bind or isolated",
+    "isolated",
+  )
+  .option(
+    "-t, --mount-target <path>",
+    "Container path for the workspace",
     "/workspace",
   )
   .description("Create a local Docker sandbox")

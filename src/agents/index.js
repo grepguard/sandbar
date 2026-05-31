@@ -1,6 +1,8 @@
+import { codex } from "./codex.js";
 import { opencode } from "./opencode.js";
 
 export const AGENTS = {
+  codex,
   opencode,
 };
 

@@ -1,0 +1,15 @@
+export const codex = {
+  runCommand: ["codex", "exec", "--yolo"],
+  installer: {
+    description: "Install Codex CLI and expose it on PATH",
+    script: [
+      "set -euo pipefail",
+      "apt update",
+      "apt -y upgrade",
+      "apt -y install curl ca-certificates bubblewrap",
+      "curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh",
+      "ln -sf /root/.local/bin/codex /usr/local/bin/codex",
+      "codex --version",
+    ].join("\n"),
+  },
+};

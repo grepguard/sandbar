@@ -1,5 +1,5 @@
 export const opencode = {
-  runCommand: ["opencode", "run"],
+  runCommand: ["opencode", "run", "--dangerously-skip-permissions"],
   installer: {
     description: "Install opencode and expose it on PATH",
     script: [
