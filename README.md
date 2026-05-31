@@ -94,7 +94,7 @@ Run an agent task inside a running Sandbar container:
 sandbar connect test --agent opencode --prompt "add a new file called hello.js"
 ```
 
-> ***Note:*** Agents run in "yolo mode"
+> ***Note:*** Agents run in "yolo mode".
 
 Or pass a file as the prompt:
 
