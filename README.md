@@ -108,8 +108,7 @@ Pass an API key to an agent:
 sandbar connect test --agent codex --prompt "hello" --key sk-xxx
 ```
 
-> ***Note:*** `--key` currently only supports `codex` and sets the `CODEX_API_KEY`
-> environment variable. Other agents ignore it.
+> ***Note:*** `--key` currently only supports `codex`.
 
 ### Kill 
 
