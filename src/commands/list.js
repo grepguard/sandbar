@@ -16,11 +16,22 @@ export async function list() {
     ...names.map((name) => name.length),
   );
 
-  console.log(`NUMBER  ${"NAME".padEnd(nameWidth)}`);
+  const modes = containers.map(
+    (container) => container.Labels["sandbar.mountMode"],
+  );
+  const modeWidth = Math.max(
+    "MODE".length,
+    ...modes.map((mode) => mode.length),
+  );
+
+  console.log(
+    `NUMBER  ${"NAME".padEnd(nameWidth)}  ${"MODE".padEnd(modeWidth)}`,
+  );
 
   for (const index of containers.keys()) {
     const name = names[index].padEnd(nameWidth);
+    const mode = modes[index].padEnd(modeWidth);
 
-    console.log(`${index}       ${name}`);
+    console.log(`${index}       ${name}  ${mode}`);
   }
 }
