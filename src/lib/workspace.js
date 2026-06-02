@@ -40,7 +40,16 @@ export async function copyWorkspaceToContainer(container, workspace) {
 
   console.log("Copying workspace into isolated container...");
 
-  const tar = spawn("tar", ["-C", workspace.source, "-cf", "-", "."]);
+  const tar = spawn("tar", [
+    "-C",
+    workspace.source,
+    "--no-xattrs",
+    "--no-fflags",
+    "--no-acls",
+    "-cf",
+    "-",
+    ".",
+  ]);
 
   await Promise.all([
     container.putArchive(tar.stdout, { path: workspace.target }),

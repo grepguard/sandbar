@@ -1,5 +1,13 @@
 export const codex = {
-  runCommand: ["codex", "exec", "--yolo", "-c", "model_reasoning_effort=high"],
+  runCommand: [
+    "codex",
+    "exec",
+    "--yolo",
+    "--model",
+    "gpt-5.5",
+    "-c",
+    "model_reasoning_effort=xhigh",
+  ],
   installer: {
     description: "Install Codex CLI and expose it on PATH",
     script: [

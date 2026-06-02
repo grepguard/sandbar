@@ -37,10 +37,15 @@ sandbar create test
 > directory (`.`) to `/workspace` inside Docker once, so changes are not shared
 > between the host and container.
 
-Choose either isolated or bind mode:
+Create a sandbox in isolated mode:
 
 ```sh
 sandbar create test --mount-mode isolated
+```
+
+Or bind mode:
+
+```sh
 sandbar create test --mount-mode bind
 ```
 
@@ -76,10 +81,16 @@ sandbar stop test
 
 ### Install and connect AI agents
 
-Install an agent inside a running Sandbar container (example: `opencode`):
+Install `opencode` inside a running Sandbar container:
 
 ```sh
 sandbar install test --agent opencode
+```
+
+Or `codex`:
+
+```sh
+sandbar install test --agent codex
 ```
 
 Connect to a running Sandbar container (opens an interactive shell):
@@ -110,7 +121,7 @@ sandbar connect test --agent codex --prompt "hello" --key sk-xxx
 
 > ***Note:*** `--key` currently only supports `codex`.
 
-> ***Note:*** Codex's `model_reasoning_effort` is currently hardcoded to `high`.
+> ***Note:*** `codex` is configured with `gpt-5.5` and `model_reasoning_effort=xhigh`.
 
 ### Kill 
 
