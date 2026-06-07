@@ -26,7 +26,9 @@ export async function connect(name, options = {}) {
     options.prompt = [content.trim()];
   }
 
-  const command = resolveCommand(options);
+  const agentCmd = resolveCommand(options);
+  const cmdStr = agentCmd.map((a) => JSON.stringify(a)).join(" ");
+  const command = ["bash", "-i", "-c", `exec ${cmdStr}`];
 
   console.log(`Connecting to sandbar container: ${name}`);
   console.log(`Working directory: ${workingDir}`);

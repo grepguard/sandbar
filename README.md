@@ -79,6 +79,16 @@ Stop a Sandbar container without removing it:
 sandbar stop test
 ```
 
+### Environment variables
+
+Add environment variables in a running Sandbar container (stored in `~/.bashrc`):
+
+```sh
+sandbar env test CODEX_API_KEY=sk-xxx
+```
+
+> ***Note:*** This appends `export KEY="value"` to the container's `~/.bashrc`, so the var is available on every connection (shell or agent). No need to pass `--key`.
+
 ### Install and connect AI agents
 
 Install `opencode` inside a running Sandbar container:
@@ -92,6 +102,8 @@ Or `codex`:
 ```sh
 sandbar install test --agent codex
 ```
+
+> ***Note:*** `codex` is configured with `gpt-5.5` and `model_reasoning_effort=xhigh`.
 
 Connect to a running Sandbar container (opens an interactive shell):
 
@@ -113,15 +125,13 @@ Or pass a file as the prompt:
 sandbar connect test --agent opencode --file prompt.txt
 ```
 
-Pass an API key to an agent:
+Pass an API key to an agent one-time (not stored):
 
 ```sh
 sandbar connect test --agent codex --prompt "hello" --key sk-xxx
 ```
 
-> ***Note:*** `--key` currently only supports `codex`.
-
-> ***Note:*** `codex` is configured with `gpt-5.5` and `model_reasoning_effort=xhigh`.
+> ***Note:*** `--key` passes the key via Docker exec environment for a single run. It is not persisted in the container. Use `sandbar env` to store it persistently.
 
 ### Logs
 

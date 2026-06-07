@@ -4,6 +4,7 @@ import { Command } from "commander";
 import packageJson from "../package.json" with { type: "json" };
 import { connect } from "../src/commands/connect.js";
 import { create } from "../src/commands/create.js";
+import { env } from "../src/commands/env.js";
 import { install } from "../src/commands/install.js";
 import { kill } from "../src/commands/kill.js";
 import { list } from "../src/commands/list.js";
@@ -34,6 +35,15 @@ program
   )
   .description("Create a local Docker sandbox")
   .action((name, options) => create({ name, ...options }));
+
+program
+  .command("env")
+  .argument("<name>", "Name of the sandbar container")
+  .argument("<var>", "Environment variable in KEY=VALUE format")
+  .description(
+    "Set a persistent environment variable in a running sandbar container",
+  )
+  .action((name, kv) => env(name, kv));
 
 program
   .command("connect")
