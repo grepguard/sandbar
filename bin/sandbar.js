@@ -7,6 +7,7 @@ import { create } from "../src/commands/create.js";
 import { install } from "../src/commands/install.js";
 import { kill } from "../src/commands/kill.js";
 import { list } from "../src/commands/list.js";
+import { logs } from "../src/commands/logs.js";
 import { start } from "../src/commands/start.js";
 import { stop } from "../src/commands/stop.js";
 
@@ -75,6 +76,13 @@ program
   .argument("<name>", "Name of the sandbar container to stop and remove")
   .description("Stop and remove a sandbar container")
   .action(kill);
+
+program
+  .command("logs")
+  .argument("<name>", "Name of the sandbar container to read logs from")
+  .option("-a, --agent <agent>", "Agent to read logs for")
+  .description("Read agent conversation logs from a running sandbar container")
+  .action((name, options) => logs(name, options));
 
 try {
   await program.parseAsync(process.argv);

@@ -123,7 +123,19 @@ sandbar connect test --agent codex --prompt "hello" --key sk-xxx
 
 > ***Note:*** `codex` is configured with `gpt-5.5` and `model_reasoning_effort=xhigh`.
 
-### Kill 
+## Logs
+
+Read agent conversation logs from a running Sandbar container:
+
+```sh
+sandbar logs test --agent codex
+```
+
+```sh
+sandbar logs test --agent opencode
+```
+
+### Kill
 
 Stop and remove a Sandbar container:
 

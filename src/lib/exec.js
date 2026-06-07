@@ -1,3 +1,5 @@
+import { Writable } from "node:stream";
+
 export async function runInContainer(docker, containerId, options) {
   const container = docker.getContainer(containerId);
   const exec = await container.exec({
@@ -16,6 +18,37 @@ export async function runInContainer(docker, containerId, options) {
 
   const result = await exec.inspect();
   return result.ExitCode;
+}
+
+export async function captureInContainer(docker, containerId, options) {
+  const container = docker.getContainer(containerId);
+  const exec = await container.exec({
+    Cmd: options.command,
+    AttachStdout: true,
+    AttachStderr: true,
+    Tty: false,
+    WorkingDir: options.workingDir,
+    User: options.user,
+    Env: options.env,
+  });
+  const stream = await exec.start({ Tty: false });
+  const stdout = [];
+  const stderr = [];
+
+  docker.modem.demuxStream(
+    stream,
+    collectChunks(stdout),
+    collectChunks(stderr),
+  );
+  await waitForStream(stream);
+
+  const result = await exec.inspect();
+
+  return {
+    exitCode: result.ExitCode,
+    stdout: Buffer.concat(stdout),
+    stderr: Buffer.concat(stderr).toString("utf-8"),
+  };
 }
 
 export async function openShell(docker, containerId, { workingDir }) {
@@ -59,6 +92,15 @@ export async function openShell(docker, containerId, { workingDir }) {
   if (result.ExitCode !== 0) {
     throw new Error(`Shell exited with code ${result.ExitCode}`);
   }
+}
+
+function collectChunks(chunks) {
+  return new Writable({
+    write(chunk, _encoding, callback) {
+      chunks.push(Buffer.from(chunk));
+      callback();
+    },
+  });
 }
 
 function waitForStream(stream) {
