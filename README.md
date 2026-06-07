@@ -65,13 +65,15 @@ List running Sandbar containers:
 sandbar list
 ```
 
-### Start and stop
+### Start
 
 Start a stopped Sandbar container:
 
 ```sh
 sandbar start test
 ```
+
+### Stop
 
 Stop a Sandbar container without removing it:
 
@@ -89,7 +91,7 @@ sandbar env test CODEX_API_KEY=sk-xxx
 
 > ***Note:*** This appends `export KEY="value"` to the container's `~/.bashrc`, so the var is available on every connection (shell or agent). No need to pass `--key`.
 
-### Install and connect AI agents
+### Install
 
 Install `opencode` inside a running Sandbar container:
 
@@ -104,6 +106,8 @@ sandbar install test --agent codex
 ```
 
 > ***Note:*** `codex` is configured with `gpt-5.5` and `model_reasoning_effort=xhigh`.
+
+### Connect
 
 Connect to a running Sandbar container (opens an interactive shell):
 
