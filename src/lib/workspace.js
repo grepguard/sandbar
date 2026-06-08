@@ -4,9 +4,21 @@ import path from "node:path";
 const DEFAULT_WORKSPACE = ".";
 const DEFAULT_MOUNT_TARGET = "/workspace";
 const DEFAULT_MOUNT_MODE = "isolated";
+const EMPTY_MOUNT_MODE = "empty";
 const MOUNT_MODES = new Set(["bind", "isolated"]);
 
 export function resolveWorkspace(cwd, options = {}) {
+  const target = options.mountTarget ?? DEFAULT_MOUNT_TARGET;
+
+  if (options.emptyWorkspace) {
+    return {
+      mode: EMPTY_MOUNT_MODE,
+      source: null,
+      target,
+      hostConfig: {},
+    };
+  }
+
   const mode = options.mountMode ?? DEFAULT_MOUNT_MODE;
 
   if (!MOUNT_MODES.has(mode)) {
@@ -16,7 +28,6 @@ export function resolveWorkspace(cwd, options = {}) {
   }
 
   const source = path.resolve(cwd, options.workspace ?? DEFAULT_WORKSPACE);
-  const target = options.mountTarget ?? DEFAULT_MOUNT_TARGET;
 
   return {
     mode,
@@ -27,6 +38,13 @@ export function resolveWorkspace(cwd, options = {}) {
 }
 
 export function describeWorkspace(workspace) {
+  if (workspace.mode === EMPTY_MOUNT_MODE) {
+    return [
+      `Mount mode: ${workspace.mode}`,
+      `Workspace: empty at ${workspace.target}`,
+    ];
+  }
+
   const action = workspace.mode === "bind" ? "Mount" : "Copy";
 
   return [

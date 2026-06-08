@@ -33,6 +33,7 @@ program
     "Container path for the workspace",
     "/workspace",
   )
+  .option("-e, --empty-workspace", "Do not copy or mount a host workspace")
   .description("Create a local Docker sandbox")
   .action((name, options) => create({ name, ...options }));
 

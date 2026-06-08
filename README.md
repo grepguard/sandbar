@@ -51,6 +51,12 @@ sandbar create test --mount-mode bind
 
 > ***Note:*** Use bind mode when you want changes shared between the host and container.
 
+Create a sandbox without copying or mounting the host workspace:
+
+```sh
+sandbar create test --empty-workspace
+```
+
 Copy or mount a different workspace path or container target:
 
 ```sh
