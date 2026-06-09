@@ -97,6 +97,14 @@ sandbar env test CODEX_API_KEY=sk-xxx
 
 > ***Note:*** This appends `export KEY="value"` to the container's `~/.bashrc`, so the var is available on every connection (shell or agent). No need to pass `--key`.
 
+Set a GitHub personal access token so the agent can push to repositories:
+
+```sh
+sandbar env test GIT_PAT=ghp_xxx
+```
+
+When `GIT_PAT` is set, the agent authenticates as **Sandbar Agent** for git operations.
+
 ### Install
 
 Install `opencode` inside a running Sandbar container:
