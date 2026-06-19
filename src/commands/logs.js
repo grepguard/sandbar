@@ -1,3 +1,4 @@
+import { AGENTS, listRunnableAgents } from "../agents/index.js";
 import { findManagedContainer } from "../lib/containers.js";
 import { createDockerClient } from "../lib/docker.js";
 import { captureInContainer } from "../lib/exec.js";
@@ -15,6 +16,11 @@ export async function logs(name, options = {}) {
 
   if (containerInfo.State !== "running") {
     throw new Error(`Sandbar container is not running: ${name}`);
+  }
+
+  if (!AGENTS[agent]) {
+    const available = listRunnableAgents().join(", ");
+    throw new Error(`Unknown agent: ${agent}. Available: ${available}`);
   }
 
   const command =

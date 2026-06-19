@@ -62,7 +62,6 @@ export async function copyWorkspaceToContainer(container, workspace) {
     "-C",
     workspace.source,
     "--no-xattrs",
-    "--no-fflags",
     "--no-acls",
     "-cf",
     "-",
