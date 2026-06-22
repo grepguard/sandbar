@@ -3,10 +3,10 @@ import { createDockerClient } from "../lib/docker.js";
 
 export async function list() {
   const docker = await createDockerClient();
-  const containers = await listManagedContainers(docker, { status: "running" });
+  const containers = await listManagedContainers(docker, { all: true });
 
   if (containers.length === 0) {
-    console.log("No running sandbar containers found.");
+    console.log("No sandbar containers found.");
     return;
   }
 
@@ -24,14 +24,21 @@ export async function list() {
     ...modes.map((mode) => mode.length),
   );
 
+  const statuses = containers.map((container) => container.State);
+  const statusWidth = Math.max(
+    "STATUS".length,
+    ...statuses.map((status) => status.length),
+  );
+
   console.log(
-    `NUMBER  ${"NAME".padEnd(nameWidth)}  ${"MODE".padEnd(modeWidth)}`,
+    `NUMBER  ${"NAME".padEnd(nameWidth)}  ${"MODE".padEnd(modeWidth)}  ${"STATUS".padEnd(statusWidth)}`,
   );
 
   for (const index of containers.keys()) {
     const name = names[index].padEnd(nameWidth);
     const mode = modes[index].padEnd(modeWidth);
+    const status = statuses[index].padEnd(statusWidth);
 
-    console.log(`${index}       ${name}  ${mode}`);
+    console.log(`${index}       ${name}  ${mode}  ${status}`);
   }
 }

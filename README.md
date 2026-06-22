@@ -65,7 +65,7 @@ sandbar create test --workspace . --mount-target /workspace
 
 ### List
 
-List running Sandbar containers:
+List Sandbar containers:
 
 ```sh
 sandbar list
