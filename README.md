@@ -151,6 +151,18 @@ sandbar connect test --agent codex --prompt "hello" --key sk-xxx
 
 > ***Note:*** `--key` passes the key via Docker exec environment for a single run. It is not persisted in the container. Use `sandbar env` to store it persistently.
 
+### Usage
+
+Read token usage for an agent:
+
+```sh
+sandbar usage test --agent opencode
+```
+
+```sh
+sandbar usage test --agent codex
+```
+
 ### Logs
 
 Logs agent conversation from a running Sandbar container:

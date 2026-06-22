@@ -11,6 +11,7 @@ import { list } from "../src/commands/list.js";
 import { logs } from "../src/commands/logs.js";
 import { start } from "../src/commands/start.js";
 import { stop } from "../src/commands/stop.js";
+import { usage } from "../src/commands/usage.js";
 
 const program = new Command();
 
@@ -65,10 +66,7 @@ program
   .description("Install an agent inside a running sandbar container")
   .action((name, options) => install(name, options));
 
-program
-  .command("list")
-  .description("List running sandbar containers")
-  .action(list);
+program.command("list").description("List sandbar containers").action(list);
 
 program
   .command("start")
@@ -94,6 +92,13 @@ program
   .option("-a, --agent <agent>", "Agent to read logs for")
   .description("Read agent conversation logs from a running sandbar container")
   .action((name, options) => logs(name, options));
+
+program
+  .command("usage")
+  .argument("<name>", "Name of the sandbar container to read usage from")
+  .option("-a, --agent <agent>", "Agent to read usage for")
+  .description("Read agent token usage from a running sandbar container")
+  .action((name, options) => usage(name, options));
 
 try {
   await program.parseAsync(process.argv);
