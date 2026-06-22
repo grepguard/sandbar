@@ -1,3 +1,4 @@
+import { spawn } from "node:child_process";
 import { Writable } from "node:stream";
 
 export async function runInContainer(docker, containerId, options) {
@@ -51,47 +52,35 @@ export async function captureInContainer(docker, containerId, options) {
   };
 }
 
-export async function openShell(docker, containerId, { workingDir }) {
-  const container = docker.getContainer(containerId);
-  const exec = await container.exec({
-    Cmd: ["bash"],
-    AttachStdin: true,
-    AttachStdout: true,
-    AttachStderr: true,
-    Tty: true,
-    WorkingDir: workingDir,
+export async function openShell(_docker, containerId, { workingDir }) {
+  const exitCode = await runInteractiveProcess("docker", [
+    "exec",
+    "-it",
+    "-w",
+    workingDir,
+    containerId,
+    "bash",
+  ]);
+
+  if (exitCode !== 0) throw new Error(`Shell exited with code ${exitCode}`);
+}
+
+function runInteractiveProcess(command, args) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, {
+      stdio: "inherit",
+    });
+
+    child.on("error", reject);
+    child.on("exit", (code, signal) => {
+      if (signal) {
+        reject(new Error(`${command} exited from signal ${signal}`));
+        return;
+      }
+
+      resolve(code ?? 0);
+    });
   });
-  const stream = await exec.start({
-    Tty: true,
-    hijack: true,
-    stdin: true,
-  });
-
-  const wasRaw = process.stdin.isRaw;
-
-  try {
-    if (process.stdin.isTTY) {
-      process.stdin.setRawMode(true);
-    }
-
-    process.stdin.resume();
-    process.stdin.pipe(stream);
-    stream.pipe(process.stdout);
-
-    await waitForStream(stream);
-  } finally {
-    process.stdin.unpipe(stream);
-
-    if (process.stdin.isTTY) {
-      process.stdin.setRawMode(wasRaw);
-    }
-  }
-
-  const result = await exec.inspect();
-
-  if (result.ExitCode !== 0) {
-    throw new Error(`Shell exited with code ${result.ExitCode}`);
-  }
 }
 
 function collectChunks(chunks) {
