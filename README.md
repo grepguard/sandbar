@@ -129,10 +129,12 @@ Connect to a running Sandbar container (opens an interactive shell):
 sandbar connect test
 ```
 
+### Run
+
 Run an agent task inside a running Sandbar container:
 
 ```sh
-sandbar connect test --agent opencode --prompt "add a new file called hello.js"
+sandbar run test --agent opencode --prompt "add a new file called hello.js"
 ```
 
 > ***Note:*** Agents run in "yolo mode".
@@ -140,13 +142,13 @@ sandbar connect test --agent opencode --prompt "add a new file called hello.js"
 Or pass a file as the prompt:
 
 ```sh
-sandbar connect test --agent opencode --file prompt.txt
+sandbar run test --agent opencode --file prompt.txt
 ```
 
 Pass an API key to an agent one-time (not stored):
 
 ```sh
-sandbar connect test --agent codex --prompt "hello" --key sk-xxx
+sandbar run test --agent codex --prompt "hello" --key sk-xxx
 ```
 
 > ***Note:*** `--key` passes the key via Docker exec environment for a single run. It is not persisted in the container. Use `sandbar env` to store it persistently.

@@ -9,6 +9,7 @@ import { install } from "../src/commands/install.js";
 import { kill } from "../src/commands/kill.js";
 import { list } from "../src/commands/list.js";
 import { logs } from "../src/commands/logs.js";
+import { run } from "../src/commands/run.js";
 import { start } from "../src/commands/start.js";
 import { stop } from "../src/commands/stop.js";
 import { usage } from "../src/commands/usage.js";
@@ -50,14 +51,21 @@ program
 program
   .command("connect")
   .argument("<name>", "Name of the sandbar container to connect to")
-  .option("-a, --agent <agent>", "Agent command to run inside the container")
+  .description("Connect to a sandbar container manually")
+  .action(connect);
+
+program
+  .command("run")
+  .argument("<name>", "Name of the sandbar container to run the agent in")
+  .requiredOption(
+    "-a, --agent <agent>",
+    "Agent command to run inside the container",
+  )
   .option("-p, --prompt <prompt...>", "Prompt to pass to the agent")
   .option("-f, --file <path>", "Path to a file containing the prompt")
   .option("-k, --key <key>", "API key to pass to the agent")
-  .description(
-    "Connect to a sandbar container manually or run an agent task inside it",
-  )
-  .action((name, options) => connect(name, options));
+  .description("Run an agent task inside a running sandbar container")
+  .action((name, options) => run(name, options));
 
 program
   .command("install")
