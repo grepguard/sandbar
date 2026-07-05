@@ -63,7 +63,7 @@ Create a sandbox from a compatible Ubuntu-based Docker image:
 sandbar create test --empty-workspace --image grepguard/sandbar-agents:latest
 ```
 
-> ***Note:*** Custom images should be based on Ubuntu and include the shell and tooling Sandbar commands expect.
+> ***Note:*** Custom images should be based on Ubuntu and include the shell and tooling Sandbar commands expect. The `grepguard/sandbar-agents` image comes with `opencode` and `codex` preinstalled.
 
 Copy or mount a different workspace path or container target:
 
