@@ -60,7 +60,7 @@ sandbar create test --empty-workspace
 Create a sandbox from a compatible Ubuntu-based Docker image:
 
 ```sh
-sandbar create test --empty-workspace --image sandbar-agents:latest
+sandbar create test --empty-workspace --image grepguard/sandbar-agents:latest
 ```
 
 > ***Note:*** Custom images should be based on Ubuntu and include the shell and tooling Sandbar commands expect.
