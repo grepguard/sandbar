@@ -35,6 +35,11 @@ program
     "Container path for the workspace",
     "/workspace",
   )
+  .option(
+    "-i, --image <image>",
+    "Compatible Ubuntu-based Docker image to use",
+    "ubuntu:26.04",
+  )
   .option("-e, --empty-workspace", "Do not copy or mount a host workspace")
   .description("Create a local Docker sandbox")
   .action((name, options) => create({ name, ...options }));

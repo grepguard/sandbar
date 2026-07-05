@@ -57,6 +57,14 @@ Create a sandbox without copying or mounting the host workspace:
 sandbar create test --empty-workspace
 ```
 
+Create a sandbox from a compatible Ubuntu-based Docker image:
+
+```sh
+sandbar create test --empty-workspace --image sandbar-agents:latest
+```
+
+> ***Note:*** Custom images should be based on Ubuntu and include the shell and tooling Sandbar commands expect.
+
 Copy or mount a different workspace path or container target:
 
 ```sh
@@ -128,6 +136,11 @@ Connect to a running Sandbar container (opens an interactive shell):
 ```sh
 sandbar connect test
 ```
+
+> ***Note:*** Docker Desktop may print a Docker Debug hint after you exit the shell. To hide Docker CLI hints, add this to your shell profile:
+> ```sh
+> export DOCKER_CLI_HINTS=false
+> ```
 
 ### Run
 

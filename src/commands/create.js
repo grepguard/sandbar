@@ -11,7 +11,7 @@ const DEFAULT_COMMAND = ["sleep", "infinity"];
 
 export async function create(options = {}) {
   const cwd = process.cwd();
-  const image = DEFAULT_IMAGE;
+  const image = options.image ?? DEFAULT_IMAGE;
   const containerName = options.name ?? createContainerName(path.basename(cwd));
   const workspace = resolveWorkspace(cwd, options);
   const docker = await createDockerClient();
