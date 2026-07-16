@@ -113,6 +113,18 @@ sandbar env test GIT_PAT=ghp_xxx
 
 When `GIT_PAT` is set, the agent authenticates as **Sandbar Agent** for git operations.
 
+### Auth
+
+Copy host provider auth into a running Sandbar container:
+
+```sh
+sandbar auth test --provider openai
+```
+
+> ***Note:*** The container must already have the agent installed (e.g. `sandbar install test --agent codex`), and your host must be logged in with the provider CLI (e.g. `codex auth`).
+> This copies `~/.codex/auth.json` from the host into the container at `/root/.codex/auth.json`.
+> Auth tokens can expire — re-run `sandbar auth` to refresh them.
+
 ### Install
 
 Install `opencode` inside a running Sandbar container:

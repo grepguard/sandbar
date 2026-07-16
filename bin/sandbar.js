@@ -2,6 +2,7 @@
 
 import { Command } from "commander";
 import packageJson from "../package.json" with { type: "json" };
+import { auth } from "../src/commands/auth.js";
 import { connect } from "../src/commands/connect.js";
 import { create } from "../src/commands/create.js";
 import { env } from "../src/commands/env.js";
@@ -43,6 +44,17 @@ program
   .option("-e, --empty-workspace", "Do not copy or mount a host workspace")
   .description("Create a local Docker sandbox")
   .action((name, options) => create({ name, ...options }));
+
+program
+  .command("auth")
+  .argument("<name>", "Name of the sandbar container")
+  .requiredOption(
+    "-p, --provider <provider>",
+    "Auth provider to copy",
+    "openai",
+  )
+  .description("Copy host provider auth into a running sandbar container")
+  .action((name, options) => auth(name, options));
 
 program
   .command("env")
