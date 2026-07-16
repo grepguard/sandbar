@@ -121,7 +121,7 @@ Copy host provider auth into a running Sandbar container:
 sandbar auth test --provider openai
 ```
 
-> ***Note:*** The container must already have the agent installed (e.g. `sandbar install test --agent codex`), and your host must be logged in with the provider CLI (e.g. `codex auth`).
+> ***Note:*** The container must already have the agent installed (e.g. `sandbar install test --agent codex`), and your host must be logged in with the provider CLI (e.g. `codex login`).
 > This copies `~/.codex/auth.json` from the host into the container at `/root/.codex/auth.json`.
 > Auth tokens can expire — re-run `sandbar auth` to refresh them.
 
